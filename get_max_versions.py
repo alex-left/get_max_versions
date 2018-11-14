@@ -34,10 +34,8 @@ repos = [
     for dir in here.iterdir() if dir.is_dir() and (dir / ".git").exists()
 ]
 
+if args:
+    repos = set([repo for repo in repos for arg in args if arg in repo.name])
+
 for repo in repos:
-    if args:
-        for arg in args:
-            if arg in repo.name:
-                print("{}: {}".format(repo.name, repo.max_version))
-    else:
-        print("{}: {}".format(repo.name, repo.max_version))
+    print("{}: {}".format(repo.name, repo.max_version))
