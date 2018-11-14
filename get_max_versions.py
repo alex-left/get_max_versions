@@ -4,6 +4,7 @@ import os
 from pathlib import Path
 import subprocess
 from pkg_resources import parse_version
+import sys
 
 class Repo:
     def __init__(self, name, versions):
@@ -22,6 +23,8 @@ class Repo:
             return "master"
 
 here = Path(os.getcwd())
+args = sys.argv[1:]
+
 
 repos = [
     Repo(
@@ -32,4 +35,9 @@ repos = [
 ]
 
 for repo in repos:
-    print("{}: {}".format(repo.name, repo.max_version))
+    if args:
+        for arg in args:
+            if arg in repo.name:
+                print("{}: {}".format(repo.name, repo.max_version))
+    else:
+        print("{}: {}".format(repo.name, repo.max_version))
